@@ -11,7 +11,7 @@ built around the SpartanMC provides various perpherals and software tools for de
 2. [Display (SPI)](#display-spi)
 3. [Distance Measurement (I2C)](#distance-measurement-i2c)
 4. [Median filter](#median-filter)
-5. [Integration](#integration)
+5. [Integration and Interrupt](#integration-and-interrupt)
 
 ---
 
@@ -79,7 +79,24 @@ Users Manual Chapter 9](https://www.spartanmc.de/docs/manual/manual.pdf).
 
 ---
 
-## Integration
+## Integration and Interrupt
++ To integrate the distance measurment and display functions and effectively ultilize computational power of the CPU, it is necessary to implement it through an interrupt controller.
+
++ So when an interrupt occurs, the controller completes the execution of the current instruction and starts the execution of an interrupt service routine (ISR).
+
++ Hardware Interrupt verus Software Interrupt
+    + Hardware: 
+        + An electronic signal from external device sent to processor. for example, pressing key on the keybroad.
+    + Software:
+        + A special instruction in the instruction set causes an interrupt.
+        + For example, a command to divide a number by zero that cause a divide-by-zero exception
+
++ Interrupts of I2C master controller
+	+ When the I2C controller receives data, it can trigger an interrupt, to notify the main processor that new data is available.
+	+ When the I2C controller has completed a data transfer, it can generate an interrupt to inform the main processor that the transfer is completed
+	+ If an error occurs during an I2C communication, the I2C controller can trigger an interrupt to inform the main processor of the error.
+
++ We have used a state machine for the implmentation of ISR, details in **i2c_driver.c**
 
 ---
 
